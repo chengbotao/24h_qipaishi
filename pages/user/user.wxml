@@ -32,151 +32,83 @@
         </view>
         <iconfont name="right"></iconfont>
       </navigator>
-    </block>
-    <navigator class="balance-box" wx:if="{{isLogin}}" url="{{isLogin?'../getBalance/getBalance':'../login/login'}}">
-      <view class="item">
-        <iconfont name="yue" size="28"></iconfont>
-        <view class="money">{{userinfo.balance}}</view>
-      </view>
-      <view class="item">
-        <iconfont name="zeng" size="28"></iconfont>
-        <view class="money">{{userinfo.giftBalance}}</view>
-      </view>
-    </navigator>
-    <!-- 账户 -->
-    <!-- <view class="account" wx:if="{{isLogin}}">
-      <navigator class="item" url="{{isLogin?'../coupon/coupon':'../login/login'}}">
-        <view class="num">{{userinfo.couponCount}}</view>
-        <view>优惠卡券</view>
-      </navigator>
-    </view> -->
+    </block>  
   </view>
   <view class="info-container">
-    <view class="account-box" wx:if="{{isLogin}}">
-      <view class="top">我的账户</view>
-      <view class="account-bottom">
-        <view bind:tap="goScore">
-          <text class="num">0</text>
-          <text>积分</text>
+    <!-- 我的账户 -->
+    <view class="my-wallet" wx:if="{{isLogin}}">
+      <view class="my-wallet__header">我的账户</view>
+      <view class="my-wallet__list">
+        <view bind:tap="handleNavigate" data-target-url="../getBalance/getBalance" data-open-type="navigate" class="my-wallet__item">
+          <image class="my-wallet__icon" src="../static/img/my_nav_1.png" mode=""></image>
+          <view class="my-wallet__content">
+            <view class="my-wallet__amount">{{userinfo.balance}}</view>
+            <view class="my-wallet__label">余额</view>
+          </view>
         </view>
-        <!-- <navigator url="/packageA/pages/myPackCard/index">
-          <text class="num">{{cardList.length}}</text>
-          <text>包时卡</text>
-        </navigator> -->
-        <view bind:tap="goCoupon">
-          <text class="num">{{userinfo.couponCount}}</text>
-          <text>优惠券</text>
+        <view bind:tap="handleNavigate" data-target-url="../getBalance/getBalance" data-open-type="navigate" class="my-wallet__item">
+          <image class="my-wallet__icon" src="../static/img/my_nav_1.png" mode=""></image>
+          <view class="my-wallet__content">
+            <view class="my-wallet__amount">{{userinfo.giftBalance}}</view>
+            <view class="my-wallet__label">赠送余额</view>
+          </view>
+        </view>
+        <view bind:tap="goCoupon" class="my-wallet__item">
+          <image class="my-wallet__icon" src="../static/img/my_nav_2.png" mode=""></image>
+          <view class="my-wallet__content">
+            <view class="my-wallet__amount">{{userinfo.couponCount || 0}}</view>
+            <view class="my-wallet__label">优惠券</view>
+          </view>
+        </view>
+        <view bind:tap="goScore" class="my-wallet__item">
+          <image class="my-wallet__icon" src="../static/img/my_nav_3.png" mode=""></image>
+          <view class="my-wallet__content">
+            <view class="my-wallet__amount">0</view>
+            <view class="my-wallet__label">积分</view>
+          </view>
         </view>
       </view>
     </view>
-    <!-- <navigator class="points-box">
-      <image src="../static/icon/points-center.png"/>
-      <text>积分商城筹备中，敬请期待！</text>
-    </navigator> -->
-    <view class="line-box">
-      <navigator class="item" url="/pages/recharge/recharge" open-type="switchTab">
-        <iconfont name="taocan" size="32"></iconfont>
-        <text style="margin-left:15rpx">优惠中心</text>
-      </navigator>
-      <navigator class="item" url="{{isLogin?'../join/join':'../login/login'}}">
-        <iconfont name="jiaruwomen" size="32"></iconfont>
-        <text style="margin-left:15rpx">加入我们</text>
-      </navigator>
-    </view>
-    <view class="control-box">
-      <view class="top">
-        常用功能
+
+    <!-- 优惠中心&加入我们 -->
+    <view class="line-nav">
+      <view class="line-nav__item" bind:tap="handleNavigate" data-target-url="/pages/recharge/recharge" data-open-type="switchTab">
+        <iconfont class="line-nav__icon" name="taocan" size="32"></iconfont>
+        <view class="line-nav__text">优惠中心</view>
       </view>
-      <view class="control">
-        <navigator class="item" url="/pages/orderList/orderList" open-type="switchTab">
-          <iconfont name="dingdan" size="32" color="#000"></iconfont>
-          <text>预定订单</text>
-        </navigator>
-        <navigator class="item" url="{{isLogin?'../productOrder/productOrder':'../login/login'}}">
-          <iconfont name="shangpindingdan1" size="32" color="#000"></iconfont>
-          <text>商品订单</text>
-        </navigator>
-        <navigator class="item" url="{{isLogin?'../myBalance/myBalance':'../login/login'}}">
-          <iconfont name="zhangdan" size="32" color="#000"></iconfont>
-          <text>余额账单</text>
-        </navigator>
-        <navigator class="item" url="../coupon/coupon">
-          <iconfont name="youhuiquan" size="32" color="#000"></iconfont>
-          <text>我的优惠券</text>
-        </navigator>
-        <!-- <navigator class="item" url="/packageA/pages/myPackCard/index">
-          <image src="../static/icon/pack.png"/>
-          <text>包时卡</text>
-        </navigator> -->
-        <navigator class="item" url="../yeepay/index" wx:if="{{isLogin}}">
-          <iconfont name="youhuikaquan" size="32" color="#000"></iconfont>
-          <text>收款账户</text>
-        </navigator>
-        <navigator class="item" url="../help/help">
-          <iconfont name="changjianwentixiangguanwenti" size="32" color="#000"></iconfont>
-          <text>常见问题</text>
-        </navigator>
-         <navigator class="item" url="../searchOrder/index">
-          <iconfont name="sousuo" size="32" color="#000"></iconfont>
-          <text>订单查询</text>
-        </navigator>
-        <!-- <navigator class="item" url="../couponActive/index?couponId=224">
-          <iconfont name="changjianwentixiangguanwenti" size="32" color="#000"></iconfont>
-          <text>常见问题</text>
-        </navigator> -->
+    
+      <view class="line-nav__item" bind:tap="handleNavigate" data-target-url="../join/join" data-open-type="navigate">
+        <iconfont class="line-nav__icon" name="jiaruwomen" size="32"></iconfont>
+        <view class="line-nav__text">加入我们</view>
       </view>
     </view>
-    <!-- 按钮菜单 -->
-    <block wx:if="{{isLogin && userinfo.userType!= 11}}">
-      <view class="control-box">
-        <view class="top">功能专区</view>
-        <view class="control" wx:if="{{userinfo.userType!= 14}}">
-          <navigator class="item" url="/packageA/pages/setStore/setStore">
-            <iconfont name="mendian" size="32" color="#5AAB6E"></iconfont>
-            <view>门店管理</view>
-          </navigator>
-          <navigator class="item" url="/packageA/pages/roomList/roomList">
-            <iconfont name="fangjian" size="32" color="#5AAB6E"></iconfont>
-            <view>房间控制</view>
-          </navigator>
-          <navigator class="item" url="/packageA/pages/SetOrder/SetOrder">
-            <iconfont name="dingdan1" size="32" color="#5AAB6E"></iconfont>
-            <view>订单管理</view>
-          </navigator>
-          <navigator class="item" url="/packageA/pages/setVip/setVip">
-            <iconfont name="huiyuan" size="32" color="#5AAB6E"></iconfont>
-            <view>用户管理</view>
-          </navigator>
-          <navigator class="item" url="/packageA/pages/scanQr/scanQr">
-            <iconfont name="tuangou" size="32" color="#5AAB6E"></iconfont>
-            <view>团购验券</view>
-          </navigator>
-          <navigator class="item" url="/packageA/pages/taskManager/taskManager">
-            <iconfont name="baojie" size="32" color="#5AAB6E"></iconfont>
-            <view>保洁订单</view>
-          </navigator>
-          <navigator class="item" url="/packageA/pages/statics/statics">
-            <iconfont name="tongjitu" size="32" color="#5AAB6E"></iconfont>
-            <view>数据统计</view>
-          </navigator>
-          <navigator class="item" url="/packageA/pages/addLock/addLock">
-            <iconfont name="e23lock" size="32" color="#5AAB6E"></iconfont>
-            <text>门锁配置</text>
-          </navigator>
+
+    <!-- 常用功能 -->
+    <view class="feature-block">
+      <view class="feature-block__header">
+        <view class="feature-block__header-icon cuIcon-titles"></view>
+        <view class="feature-block__header-text">常用功能</view>
+      </view>
+      <view class="feature-block__content">
+        <view class="feature-block__item" wx:for="{{functionsList}}" wx:key="index" wx:if="{{item.show}}" bindtap="handleFunctionTap" data-item="{{item}}">
+          <iconfont class="feature-block__item-icon" name="{{item.iconName}}" size="32" color="#000000"></iconfont>
+          <view class="feature-block__item-label">{{item.text}}</view>
         </view>
-        <view class="control" wx:else>
-          <!-- 保洁端 -->
-          <navigator class="item" url="/packageA/pages/task/task">
-            <iconfont name="iov-store" size="32" color="#5AAB6E"></iconfont>
-            <view>任务大厅</view>
-          </navigator>
-          <navigator class="item" url="/packageA/pages/roomList/roomList">
-            <iconfont name="shebeiguanli" size="32" color="#5AAB6E"></iconfont>
-            <view>房间状态</view>
-          </navigator>
-          <navigator class="item" url="/packageA/pages/taskStatics/taskStatics">
-            <iconfont name="duiqifangshi2" size="32" color="#5AAB6E"></iconfont>
-            <view>任务统计</view>
+      </view>
+    </view>
+
+    <!-- 功能专区 -->
+    <block wx:if="{{isLogin && userinfo.userType != 11}}">
+      <view class="feature-block">
+        <view class="feature-block__header">
+          <view class="feature-block__header-icon cuIcon-titles"></view>
+          <view class="feature-block__header-text">功能专区</view>
+        </view>
+        <!-- 循环渲染功能项：根据userType选择对应配置 -->
+        <view class="feature-block__content">
+          <navigator class="feature-block__item" wx:for="{{userinfo.userType == 14 ? functionSections.cleaner : functionSections.merchant}}" wx:key="index" url="{{item.url}}">
+            <iconfont name="{{item.iconName}}" size="32" color="{{item.color}}"></iconfont>
+            <view>{{item.text}}</view>
           </navigator>
         </view>
       </view>

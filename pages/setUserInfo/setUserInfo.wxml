@@ -1,28 +1,35 @@
 <!--pages/setUserInfo/setUserInfo.wxml-->
-<view class="container">
-  <view class="photo">
-    <view class="img">
+<view class="user-setting">
+  <view class="user-setting__avatar">
+    <view class="user-setting__avatar-img">
       <image src="{{userinfo.avatar?userinfo.avatar:'/logo.png'}}" mode="widthFix" />
     </view>
-    <button hover-class="button-click" class="tip" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">点击更新头像</button>
+    <button hover-class="button-click" class="user-setting__avatar-tip" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">点击更新头像</button>
   </view>
-  <view class="list">
-    <view class="item" bindtap="setUserName">
-      <view class="left">
-        <view class="label">昵称</view>
-        <text>{{userinfo.nickname}}</text>
+  <view class="user-setting__list">
+    <view class="user-setting__list-item" bindtap="setUserName">
+      <view class="user-setting__list-left">
+        <view class="user-setting__list-label">昵称</view>
+        <text class="user-setting__list-text">{{userinfo.nickname}}</text>
       </view>
       <iconfont name="right"></iconfont>
     </view>
-    <view class="item">
-      <view class="left">
-        <view class="label">手机</view>
-        <text>{{userinfo.mobile}}</text>
+    <view class="user-setting__list-item">
+      <view class="user-setting__list-left">
+        <view class="user-setting__list-label">手机</view>
+        <text class="user-setting__list-text">{{userinfo.mobile}}</text>
       </view>
       <!-- <view class="btn" bindtap="setPhone">更换手机</view> -->
     </view>
+    <view class="user-setting__list-item" bindtap="openGenderModal">
+      <view class="user-setting__list-left">
+        <view class="user-setting__list-label">性别</view>
+        <text class="user-setting__list-text">{{ genderLabel }}</text>
+      </view>
+      <iconfont name="right"></iconfont>
+    </view>
   </view>
-  <view class="bottom {{isIpx?'fix-iphonex-button':''}}">
-    <view class="btn theme-color-shadow theme-bg-primary" bindtap="exitLogin" style="color: #fff;">退出登录</view>
+  <view class="user-setting__footer {{isIpx?'fix-iphonex-button':''}}">
+    <view class="user-setting__exit-btn" bindtap="exitLogin">退出登录</view>
   </view>
 </view>

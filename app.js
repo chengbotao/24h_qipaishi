@@ -2,7 +2,8 @@
 App({
   globalData: {
     //接口地址 只修改域名为api.xxxx.com  后面的/app-api不要删
-    baseUrl: "https://malaoban.scyanzu.com/app-api",
+    // baseUrl: "https://malaoban.scyanzu.com/app-api",
+    baseUrl: "https://kneadtestapi.metaspace.host/app-api",
     // baseUrl: "http://localhost:8900/app-api",
     // baseUrl: "http://test.mzj.com:8900/app-api",
     //租户id

@@ -158,7 +158,7 @@
   background: #F6F6F6;
   border-radius: 28rpx 28rpx 0rpx 0rpx;
   padding: 10rpx 26rpx;
-  margin-top: -62rpx;
+  margin-top: 30rpx;
 }
 
 .info-container .top {
@@ -304,6 +304,7 @@
   text-align: center;
   font-weight: 600;
 }
+
 /* ===== 遮罩层 ===== */
 .expire-mask {
   position: fixed;
@@ -338,12 +339,14 @@
   border-bottom: 1rpx solid #f0f0f0;
   background: #fafafa;
 }
+
 .expire-mask .expire-info {
   font-size: 34rpx;
   font-weight: 600;
   text-align: center;
   color: rgb(238, 36, 36);
 }
+
 /* ===== 滚动列表 ===== */
 .expire-mask .expire-list {
   flex: 1;
@@ -365,9 +368,11 @@
 /* 左侧类型+名称（超长省略号） */
 .expire-mask .expire-item .name-box {
   flex: 1;
-  min-width: 0;            /* 必须，配合 text-overflow */
+  min-width: 0;
+  /* 必须，配合 text-overflow */
   margin-right: 16rpx;
 }
+
 .expire-mask .expire-item .name-type,
 .expire-mask .expire-item .name {
   display: block;
@@ -375,11 +380,13 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
 .expire-mask .expire-item .name-type {
   font-size: 26rpx;
   color: #666;
   margin-bottom: 4rpx;
 }
+
 .expire-mask .expire-item .name {
   font-weight: 500;
   color: #333;
@@ -398,6 +405,7 @@
   display: flex;
   justify-content: center;
 }
+
 .expire-mask .btn {
   width: 240rpx;
   height: 76rpx;
@@ -407,16 +415,196 @@
   border-radius: 38rpx;
   border: none;
 }
+
 .expire-mask .primary {
   background: linear-gradient(135deg, #07c160, #06a050);
   color: #fff;
 }
+
 .expire-mask .primary:active {
   opacity: .9;
 }
 
 /* ===== 入场动画 ===== */
 @keyframes fadeIn {
-  from { opacity: 0; transform: scale(.95); }
-  to   { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ===== 我的账户 ===== */
+.my-wallet {
+  margin: 0 auto;
+  background: #FFFFFF;
+  box-shadow: 0px 4rpx 28rpx 0px rgba(0, 0, 0, 0.02);
+  border-radius: 16rpx;
+  padding: 32rpx;
+  box-sizing: border-box;
+}
+
+.my-wallet__header {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333333;
+}
+
+.my-wallet__list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10rpx;
+  margin-top: 24rpx;
+}
+
+.my-wallet__item {
+  position: relative;
+  flex: 1;
+  height: 116rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 10rpx;
+  /* 间距微调，根据需求调整 */
+}
+
+.my-wallet__icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  /* 保持图标比例，避免拉伸 */
+}
+
+.my-wallet__content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.my-wallet__amount {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333333;
+}
+
+.my-wallet__label {
+  font-size: 26rpx;
+  color: #333333;
+  margin-top: 12rpx;
+}
+
+/* ===== 优惠中心&加入我们 ===== */
+.line-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 26rpx;
+  gap: 30rpx;
+}
+
+.line-nav__item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  font-size: 33rpx;
+  height: 143rpx;
+  flex: 1;
+  border-radius: 17rpx;
+  cursor: pointer;
+}
+
+.line-nav__icon {
+  width: 76rpx;
+  height: 64rpx;
+  color: inherit;
+}
+
+.line-nav__text {
+  color: inherit;
+}
+
+.line-nav__item:first-of-type {
+  background: linear-gradient(#D6F5DD 30%, #fff 80%);
+  color: var(--main-color);
+}
+
+.line-nav__item:last-of-type {
+  background: linear-gradient(#FFECD1 30%, #fff 80%);
+  color: #E8B573;
+}
+
+/* ===== 常用功能 ===== */
+.feature-block {
+  margin: 20rpx auto 0;
+  padding: 20rpx;
+  background-color: #ffffff;
+  border-radius: 16rpx;
+  box-sizing: border-box;
+}
+
+.feature-block__header {
+  display: flex;
+  align-items: center;
+}
+
+.feature-block__header-icon {
+  font-size: 36rpx;
+  font-family: "cuIcon";
+  content: "\e64e";
+  margin-right: 5rpx;
+  color: var(--main-red);
+}
+
+.feature-block__header-text {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333333;
+}
+
+.feature-block__content {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 30rpx;
+  gap: 40rpx 0rpx;
+  padding-bottom: 20rpx;
+}
+
+.feature-block__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: calc(25%);
+  cursor: pointer;
+}
+
+.feature-block__item-icon {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 8rpx;
+  object-fit: cover;
+}
+
+.feature-block__item-label {
+  margin-top: 12rpx;
+  font-size: 24rpx;
+  color: #666666;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

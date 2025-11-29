@@ -1,23 +1,27 @@
 /* pages/setUserInfo/setUserInfo.wxss */
-.container{
+page {
+  background-color: #ffffff;
+  min-height: 100vh;
+}
+.user-setting{
   padding: 0 30rpx;
 }
-.photo{
+.user-setting__avatar{
   padding: 50rpx 0;
   text-align: center;
 }
-.photo .img{
+.user-setting__avatar .user-setting__avatar-img{
   width: 200rpx;
   height: 200rpx;
   border-radius: 100%;
   margin: 0 auto;
   overflow: hidden;
 }
-.photo .img image{
+.user-setting__avatar .user-setting__avatar-img image{
   width: 100%;
   height: 100%;
 }
-.photo .tip{
+.user-setting__avatar .user-setting__avatar-tip{
   color: #999;
   font-size: 24rpx;
   margin:  auto;
@@ -25,29 +29,32 @@
   background: transparent;
   padding: 0;
 }
-.list .item{
+.user-setting__list .user-setting__list-item{
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1rpx solid #ddd;
   height: 100rpx;
 }
-.list .item .label{
+.user-setting__list .user-setting__list-item .user-setting__list-label{
   color: #666;
   width: 140rpx;
 }
-.list .item:last-child{
+.user-setting__list .user-setting__list-item:nth-child(2) .user-setting__list-text{
+  color: #666;
+}
+.user-setting__list .user-setting__list-item:last-child{
   border: 0;
 }
-.list .item .left{
+.user-setting__list .user-setting__list-item .user-setting__list-left{
   display: flex;
   align-items: center;
 }
-.list .item .icon-right{
+.user-setting__list .user-setting__list-item .icon-right{
   color: #999;
   font-size: 40rpx;
 }
-.list .item .btn{
+.user-setting__list .user-setting__list-item .btn{
   border: 1rpx solid #ddd;
   border-radius: 30rpx;
   font-size: 24rpx;
@@ -55,7 +62,7 @@
   line-height: 60rpx;
   text-align: center;
 }
-.bottom{
+.user-setting__footer{
   width: 100%;
   position: absolute;
   bottom: 0;
@@ -63,9 +70,11 @@
   padding: 30rpx;
   box-sizing: border-box;
 }
-.bottom .btn{
+.user-setting__footer .user-setting__exit-btn{
   height: 90rpx;
   text-align: center;
   line-height: 90rpx;
   border-radius: 16rpx;
+  border: 1rpx solid var(--main-red);
+  color: var(--main-red);
 }

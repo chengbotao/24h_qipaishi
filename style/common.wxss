@@ -1,3 +1,4 @@
+@import "./cuIcon.wxss";
 page {
     --main-color: #5AAB6E;
     --main-color-shadow: #4b905c;
