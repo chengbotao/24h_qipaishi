@@ -36,6 +36,7 @@ Page({
       { value: 2, text: "绿米" },
       { value: 3, text: "麻老板" },
     ],
+    manufacturersValue: "",
     deviceTypeIndex: "",
     deviceManufacturerIndex: "",
     deviceType: "",
@@ -273,6 +274,23 @@ Page({
       }
     });
   },
+  ManufacturersDropdown(event){
+    let that = this;
+    this.data.deviceManufacturers.map((it) => {
+      if (it.value == event.detail) {
+        if (it.value == -1) {
+          that.setData({
+            manufacturersValue: "",
+          });
+        } else {
+          that.setData({
+            manufacturersValue: it.value,
+          });
+        }
+        that.getDeviceList("refresh");
+      }
+    });
+  },
   // 添加
   add() {
     this.setData({
@@ -427,7 +445,7 @@ Page({
       });
       return;
     }
-    if (!that.data.deviceTypeIndex || that.data.deviceTypeIndex == 0) {
+    if (this.data.deviceManufacturerIndex!=='2' && (!that.data.deviceTypeIndex || that.data.deviceTypeIndex == 0)) {
       wx.showToast({
         title: "请选择设备类型",
         icon: "error",
@@ -435,6 +453,17 @@ Page({
       return;
     }
     var deviceType = that.data.deviceTypes[that.data.deviceTypeIndex].value;
+    if (this.data.deviceManufacturerIndex==='2') {
+      // 获取绿联配置
+      var {originDeviceData, deviceTypeIndex, lineIndex, controlIndex} = this.data
+    var defaultDevice = originDeviceData[deviceTypeIndex] || null;
+    var lineOptions = defaultDevice ? defaultDevice.resource : [];
+    var defaultLine = lineOptions[lineIndex] || null;
+    var controlOptions = defaultLine ? defaultLine.control : [];
+    var defaultControl = controlOptions[controlIndex] || null;
+    deviceType = that.data.deviceManufacturers.find(manufacturers=>manufacturers.value == that.data.deviceManufacturerIndex).value
+    }
+
     var roomId = "";
     if (that.data.roomIndex != 0) {
       roomId = that.data.roomList[that.data.roomIndex].value;
@@ -446,12 +475,21 @@ Page({
         "1",
         "post",
         {
-          deviceSn: that.data.deviceSn,
-          manufacturers: that.data.manufacturers,
-          shareDevice: that.data.shareDevice,
-          deviceType: deviceType,
-          storeId: that.data.storeId,
-          roomId: roomId,
+            "deviceSn": that.data.deviceSn,
+            "manufacturers": that.data.deviceManufacturers.find(manufacturers=>manufacturers.value == that.data.deviceManufacturerIndex).value,
+            "deviceType": deviceType,
+            "storeId": that.data.storeId,
+            "roomId": roomId,
+            "shareDevice": that.data.shareDevice,
+            "aqaraDeviceInfoCreateReqVO": this.data.deviceManufacturerIndex==='2' ? {
+              "deviceName": defaultDevice.deviceName,
+              "devModel": defaultDevice.devModel,
+              "resourceName": defaultLine.resourceName,
+              "resourceId": defaultLine.resource,
+              "resourceDesc": defaultLine.resourceDesc,
+              "controlName": defaultControl.controlName,
+              "controlValue": defaultControl.controlValue
+          }: null
         },
         app.globalData.userDatatoken.accessToken,
         "",
@@ -464,6 +502,9 @@ Page({
             });
             that.setData({
               deviceSn: "",
+            });
+            this.setData({
+              showAdd: false,
             });
             that.getDeviceList("refresh");
           } else {
@@ -483,6 +524,9 @@ Page({
       roomIndex: "",
       shareDevice: false,
       deviceSn: "",
+    });
+    this.setData({
+      showAdd: false,
     });
   },
   delDevice: function (e) {

@@ -3,6 +3,7 @@
   <view class="item">
     <van-dropdown-menu active-color="{{mainColor}}">
       <van-dropdown-item value="{{ roomId }}" options="{{ roomList }}" bind:change="roomDropdown" />
+      <van-dropdown-item value="{{ manufacturersValue }}" options="{{ deviceManufacturers }}" bind:change="ManufacturersDropdown" />
       <van-dropdown-item value="{{ deviceType }}" options="{{ deviceTypes }}" bind:change="typeDropdown" />
     </van-dropdown-menu>
   </view>
@@ -102,6 +103,7 @@
           </view>
         </picker>
       </van-field>
+      <view class="tips">{{lineOptions[lineIndex].resourceDesc}}</view>
       <van-field label="开关状态" placeholder="请选择">
         <picker slot="input" bindchange="bindControlSelect" value="{{controlIndex}}" range-key="controlName" range="{{controlOptions}}">
           <view class="picker">
