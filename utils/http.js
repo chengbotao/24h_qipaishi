@@ -13,6 +13,10 @@ function request(url, urltype, method, data, token, message, successBack, failBa
     })
   }
   var atempurl = app.globalData.baseUrl + url;
+  if (urltype==='-1') {
+    atempurl = app.globalData.baseUrl.replace("app-api", 'admin-api') + url
+  }
+  // var atempurl = app.globalData.baseUrl + url;
   //console.log('url++++++');
   //console.log(url);
   //console.log(urltype);
@@ -34,7 +38,7 @@ function request(url, urltype, method, data, token, message, successBack, failBa
     url: atempurl,
     data: data,
     header: {
-      'tenant-id': app.globalData.tenantId,
+      'tenant-id': urltype==='-1' ? undefined : app.globalData.tenantId,
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + aheadertoken
     },

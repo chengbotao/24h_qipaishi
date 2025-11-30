@@ -68,8 +68,24 @@
 <van-dialog use-slot title="添加设备" show="{{ showAdd }}" show-cancel-button bind:confirm="submitAdd" bind:cancel="cancelAdd" before-close="{{beforeCloseFunction}}" confirm-button-color="{{mainColor}}">
   <view class="dialog">
     <van-cell-group>
+      <van-field label="设备厂家：" placeholder="请选择">
+        <picker slot="input" bindchange="bindDeviceManufacturerSelect" value="{{deviceManufacturerIndex}}" range-key="text" range="{{deviceManufacturers}}">
+          <view class="picker">
+            <input type="text" disabled placeholder="请选择类型" placeholder-class="plh" value="{{deviceManufacturers[deviceManufacturerIndex].text}}" />
+            <van-icon name="arrow-down" />
+          </view>
+        </picker>
+      </van-field>
       <van-field model:value="{{deviceSn}}" label="设备编号：" maxlength="10" placeholder="请输入,最长10位数" />
-      <van-field label="设备类型：" placeholder="请选择">
+      <van-field wx:if="{{deviceManufacturerIndex==='2'}}" label="设备类型：" placeholder="请选择">
+        <picker slot="input" bindchange="bindDeviceTypeSelect" value="{{deviceTypeIndex}}" range-key="text" range="{{deviceOptions}}">
+          <view class="picker">
+            <input type="text" disabled placeholder="请选择类型" placeholder-class="plh" value="{{deviceOptions[deviceTypeIndex].text}}" />
+            <van-icon name="arrow-down" />
+          </view>
+        </picker>
+      </van-field>
+      <van-field wx:else label="设备类型：" placeholder="请选择">
         <picker slot="input" bindchange="bindDeviceTypeSelect" value="{{deviceTypeIndex}}" range-key="text" range="{{deviceTypes}}">
           <view class="picker">
             <input type="text" disabled placeholder="请选择类型" placeholder-class="plh" value="{{deviceTypes[deviceTypeIndex].text}}" />
@@ -77,6 +93,26 @@
           </view>
         </picker>
       </van-field>
+      <block wx:if="{{deviceManufacturerIndex==='2'}}">
+        <van-field label="线路" placeholder="请选择">
+        <picker slot="input" bindchange="bindLineSelect" value="{{lineIndex}}" range-key="resourceName" range="{{lineOptions}}">
+          <view class="picker">
+            <input type="text" disabled placeholder="请选择类型" placeholder-class="plh" value="{{lineOptions[lineIndex].resourceName}}" />
+            <van-icon name="arrow-down" />
+          </view>
+        </picker>
+      </van-field>
+      <van-field label="开关状态" placeholder="请选择">
+        <picker slot="input" bindchange="bindControlSelect" value="{{controlIndex}}" range-key="controlName" range="{{controlOptions}}">
+          <view class="picker">
+            <input type="text" disabled placeholder="请选择类型" placeholder-class="plh" value="{{controlOptions[controlIndex].controlName}}" />
+            <van-icon name="arrow-down" />
+          </view>
+        </picker>
+      </van-field>
+      <van-field label="resource" placeholder="{{resource}}" readonly></van-field>
+      </block>
+      
       <van-field label="门店：" placeholder="{{storeName}}" readonly>
 
       </van-field>

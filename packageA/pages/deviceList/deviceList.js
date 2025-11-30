@@ -30,7 +30,14 @@ Page({
       { value: 11, text: "二维码识别器" },
       { value: 12, text: "红外控制器" },
     ],
+    deviceManufacturers: [
+      { value: "", text: "请选择厂家" },
+      { value: 1, text: "优町" },
+      { value: 2, text: "绿米" },
+      { value: 3, text: "麻老板" },
+    ],
     deviceTypeIndex: "",
+    deviceManufacturerIndex: "",
     deviceType: "",
     deviceList: [],
     isIpx: app.globalData.isIpx ? true : false,
@@ -52,6 +59,14 @@ Page({
     showQrConfig: false,
     qrHour: "",
     qrPrice: "",
+    originDeviceData: [],
+    deviceOptions: [],
+    lineOptions: [],  
+    controlOptions: [], 
+    // 3. 选中状态（核心：联动的桥梁）
+    lineIndex: 0,      // 选中的线路索引
+    controlIndex: 0,   // 选中的控制状态索引
+    resource: "",
   },
 
   /**
@@ -268,6 +283,119 @@ Page({
     this.setData({
       deviceTypeIndex: e.detail.value,
     });
+
+    if (this.data.deviceManufacturerIndex==='2') {
+      var {originDeviceData} = this.data
+       // 1. 格式化设备选择列表（提取 devModel 和 deviceName）
+    const deviceOptions = originDeviceData.map(item => ({
+      value: item.devModel,
+      text: item.deviceName
+    }));
+
+    
+    const defaultDevice = originDeviceData[e.detail.value] || null;
+    const lineOptions = defaultDevice ? defaultDevice.resource : [];
+    const defaultLine = lineOptions[0] || null;
+    const controlOptions = defaultLine ? defaultLine.control : [];
+
+    // 更新数据（初始化选中状态和联动列表）
+    this.setData({
+      deviceOptions,
+      lineOptions,
+      controlOptions,
+      lineIndex: 0,
+      controlIndex: 0,
+      resource: defaultDevice.resource[0].resource,
+    });
+    }
+  },
+  bindLineSelect: function (e) {
+    this.setData({
+      lineIndex: e.detail.value,
+    });
+
+    if (this.data.deviceManufacturerIndex==='2') {
+      var {originDeviceData, deviceTypeIndex} = this.data
+       // 1. 格式化设备选择列表（提取 devModel 和 deviceName）
+    const deviceOptions = originDeviceData.map(item => ({
+      value: item.devModel,
+      text: item.deviceName
+    }));
+
+    
+    const defaultDevice = originDeviceData[deviceTypeIndex] || null;
+    const lineOptions = defaultDevice ? defaultDevice.resource : [];
+    const defaultLine = lineOptions[e.detail.value] || null;
+    const controlOptions = defaultLine ? defaultLine.control : [];
+
+    // 更新数据（初始化选中状态和联动列表）
+    this.setData({
+      deviceOptions,
+      lineOptions,
+      controlOptions,
+      controlIndex: 0,
+      resource: defaultDevice.resource[0].resource,
+    });
+    }
+  },
+  bindControlSelect: function (e) {
+    this.setData({
+      controlIndex: e.detail.value,
+    });
+  },
+  bindDeviceManufacturerSelect: function (e) {
+    this.setData({
+      deviceManufacturerIndex: e.detail.value,
+    });
+    var that = this;
+    if (e.detail.value==='2') {
+      http.request(
+        "/member/aqara-device-info/aqara/linkage",
+        "-1",
+        "post",
+        {
+        },
+        "",
+        "",
+        function success(info) {
+          if (info.code == 0) {
+            var originDeviceData =  info.data;
+            that.setData({
+              originDeviceData
+            })
+            // 1. 格式化设备选择列表（提取 devModel 和 deviceName）
+    const deviceOptions = originDeviceData.map(item => ({
+      value: item.devModel,
+      text: item.deviceName
+    }));
+
+    
+    const defaultDevice = originDeviceData[0] || null;
+    const lineOptions = defaultDevice ? defaultDevice.resource : [];
+    const defaultLine = lineOptions[0] || null;
+    const controlOptions = defaultLine ? defaultLine.control : [];
+
+    // 更新数据（初始化选中状态和联动列表）
+    that.setData({
+      deviceOptions,
+      lineOptions,
+      controlOptions,
+      deviceTypeIndex: 0,
+      lineIndex: 0,
+      controlIndex: 0,
+      resource: defaultDevice.resource[0].resource,
+    });
+
+          } else {
+            wx.showModal({
+              content: info.msg,
+              showCancel: false,
+            });
+          }
+        },
+        function fail(info) {}
+      );
+    }
   },
   bindStoreSelect: function (e) {
     console.log(e.detail.value);
@@ -319,6 +447,7 @@ Page({
         "post",
         {
           deviceSn: that.data.deviceSn,
+          manufacturers: that.data.manufacturers,
           shareDevice: that.data.shareDevice,
           deviceType: deviceType,
           storeId: that.data.storeId,
