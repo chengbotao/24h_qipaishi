@@ -15,6 +15,7 @@ Page({
     pageNo: 1,
     pageSize: 10,
     name: '',
+    nickname: '',
     showEdit: false,
     showAdd: false,
     storeId: '',
@@ -171,8 +172,9 @@ Page({
   },
   getVipList: function () {
     var that = this;
-    //if (app.globalData.isLogin) 
-    {
+    console.log("getVipList")
+    // if (app.globalData.isLogin) 
+    // {
       http.request(
         "/member/store/getVipConfig/" + that.data.storeId,
         "1",
@@ -200,7 +202,7 @@ Page({
 
         }
       )
-    }
+    // }
   },
 
 
@@ -268,6 +270,7 @@ Page({
           "/member/store/addMemberVip",
           "1",
           "post", {
+          name: that.data.nickname,
           "mobile": that.data.mobile,
           "storeId": that.data.storeId,
           "vipLevel": that.data.vipList[that.data.index].value,
